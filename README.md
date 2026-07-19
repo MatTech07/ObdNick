@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="app/src/main/res/drawable/logo_obdnick.png" alt="ObdNick Logo" width="220"/>
+  <img src="logo_obdnick.png" alt="ObdNick Logo" width="220"/>
 </p>
 
 <h1 align="center">ObdNick</h1>
@@ -18,9 +18,9 @@
 
 ---
 
-
 # ObdNick
-ObdNick is an OBD-II diagnostic and performance app built for enthusiasts. Customize your dashboard with dynamic gauges, monitor engine telemetry in real-time, and track your 0-100 km/h performance. Experience a zero-lag clean interface with no ads or subscriptions, just pure control over your vehicle’s data.
+
+ObdNick is an OBD-II diagnostic and performance app built for enthusiasts. Customize your dashboard with dynamic gauges, monitor engine telemetry in real-time, and track your 0-100 km/h performance. Experience a zero-lag clean interface with no ads or subscriptions, just pure control over your vehicle's data.
 
 ---
 
@@ -448,4 +448,3 @@ Requires **Android Studio** with JDK 11+ and an ELM327 Bluetooth adapter for liv
 <p align="center">
   <sub>ObdNick v 1.0 · Built with Kotlin & Jetpack Compose</sub>
 </p>
-
