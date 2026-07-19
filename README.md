@@ -12,8 +12,15 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Kotlin-2.4.10-7F52FF?logo=kotlin&logoColor=white" alt="Kotlin"/>
   <img src="https://img.shields.io/badge/Jetpack%20Compose-Material%203-4285F4?logo=android&logoColor=white" alt="Compose"/>
-  <img src="https://img.shields.io/badge/minSdk-24-green" alt="minSdk"/>
+  <img src="https://img.shields.io/badge/Android-7.0%2B%20(API%2024)-green" alt="minSdk"/>
+  <img src="https://img.shields.io/badge/targetSdk-37-green" alt="targetSdk"/>
   <img src="https://img.shields.io/badge/version-1.0-blue" alt="version"/>
+</p>
+
+<p align="center">
+  <a href="https://www.paypal.com/donate/?hosted_button_id=PYZM2HT8ZKPYN">
+    <img src="https://img.shields.io/badge/Donate-PayPal-00457C?logo=paypal&logoColor=white" alt="Donate with PayPal"/>
+  </a>
 </p>
 
 ---
@@ -27,6 +34,8 @@ ObdNick is an OBD-II diagnostic and performance app built for enthusiasts. Custo
 ## Table of Contents
 
 - [Overview](#overview)
+- [Requirements](#requirements)
+- [Install](#install)
 - [Getting Started](#getting-started)
 - [Navigation](#navigation)
 - [Dashboard](#dashboard)
@@ -36,6 +45,7 @@ ObdNick is an OBD-II diagnostic and performance app built for enthusiasts. Custo
 - [Bluetooth Connection](#bluetooth-connection)
 - [Settings & Themes](#settings--themes)
 - [Demo Mode](#demo-mode)
+- [Support the project](#support-the-project)
 - [Technical Reference](#technical-reference)
 
 ---
@@ -44,7 +54,36 @@ ObdNick is an OBD-II diagnostic and performance app built for enthusiasts. Custo
 
 **ObdNick** connects to an ELM327 Bluetooth OBD-II adapter and turns your phone into a configurable racing dashboard. You can monitor RPM, speed, throttle, temperatures, and more through custom widgets, run 0–100 km/h acceleration tests, read trouble codes, and personalize the look with racing-themed color schemes.
 
-The app is designed for low latency, stable Bluetooth sessions, and a clean dark UI optimized for in-car use.
+The app is designed for low latency, stable Bluetooth sessions, and a clean dark UI optimized for in-car use. The interface runs **edge-to-edge** — content uses the full screen below the top bar, with **ObdNick · v 1.0** shown in the top-right corner next to the current screen name.
+
+---
+
+## Requirements
+
+| Item | Detail |
+|------|--------|
+| **OS** | Android 7.0 (Nougat) or higher — API 24+ |
+| **Target SDK** | Android API 37 |
+| **Package** | `com.example.obdnick` |
+| **Hardware** | ELM327 Bluetooth OBD-II adapter *(optional with Demo Mode)* |
+| **Permissions** | Bluetooth connect/scan, notifications (Android 13+), location on Android ≤ 11 for device scan |
+
+---
+
+## Install
+
+1. Download the latest **APK** from the GitHub **Releases** page of this repository.
+2. Enable installation from unknown sources if prompted.
+3. Install and open ObdNick.
+4. Pair your ELM327 adapter in Android Bluetooth settings before connecting.
+
+Build from source:
+
+```bash
+./gradlew assembleDebug
+```
+
+Requires **Android Studio** with JDK 11+.
 
 ---
 
@@ -71,7 +110,7 @@ The app is designed for low latency, stable Bluetooth sessions, and a clean dark
 | **Settings** | Theme and Demo Mode |
 | **Connect / Disconnect** | Opens the connection screen to scan and pair devices |
 
-The current screen name appears in the top bar. When Demo Mode is active, a dark **Demo Mode Active** badge appears next to the title.
+The current screen name appears in the top bar on the left. **ObdNick · v 1.0** is shown on the right in the same bar. When Demo Mode is active, a dark **Demo Mode Active** badge appears next to the title.
 
 ---
 
@@ -111,7 +150,7 @@ While editing, live data is **frozen** and Bluetooth polling is **paused** to ke
 In the widget configuration sheet you can define **color ranges** for any value:
 
 - Example: 0–3000 Green, 3000–6000 Yellow, 6000–8000 Red
-- Enable **Flash** on a range to make the widget **pulse** when the value enters that zone
+- Enable **Flash** on a range to make the widget **pulse quickly** when the value enters that zone (180 ms cycle)
 - Outside all defined ranges, the widget returns to its **default theme color**
 
 The needle on gauges is **clamped** to the configured min/max arc, but the **digital value always shows the real reading** (even above max).
@@ -158,9 +197,14 @@ Speed is polled at **maximum frequency** during this screen for the most accurat
 
 ## Live Data
 
-Shows a scrollable list of **all PIDs** currently subscribed and supported by your vehicle. Each row displays the sensor name, formatted value, and unit.
+Shows a scrollable list of **all PIDs available** from your vehicle or from Demo Mode. Each row displays the sensor name, formatted value, and unit. Unread values show `---` until the first poll completes.
 
-Requires an active Bluetooth connection (Demo Mode does not unlock this screen unless you are also connected).
+### How polling works
+
+1. **On open** — all available PIDs are queried immediately (full vehicle scan, up to ~8 s timeout).
+2. **While scrolling** — only PIDs **visible on screen** (+ one row buffer) are polled continuously, saving bandwidth and keeping the list responsive.
+
+Works with a **Bluetooth connection** or **Demo Mode**. When both are active, **real vehicle data takes priority** over simulated demo values.
 
 ---
 
@@ -226,6 +270,10 @@ Simulates realistic engine data without Bluetooth:
 - While active, a **Demo Mode Active** badge appears in the top bar
 - RPM, speed, throttle, load, temperatures, and MAF are generated with physically coherent relationships (speed follows RPM)
 
+### Donations
+
+Tap **Donate with PayPal** at the bottom of Settings to open the PayPal donation page in your browser.
+
 ---
 
 ## Demo Mode
@@ -234,11 +282,23 @@ Simulates realistic engine data without Bluetooth:
 |---------|----------------|
 | Dashboard widgets | ✅ Yes |
 | Performance timer | ✅ Yes (simulated speed) |
-| Live Data | ❌ Requires BT connection |
+| Live Data | ✅ Yes (simulated PIDs; real BT overrides when connected) |
 | Diagnostics | ❌ Requires BT connection |
-| Auto-connect | Skipped (no adapter needed for dashboard) |
+| Auto-connect | Skipped (no adapter needed for dashboard/demo) |
 
 ---
+
+## Support the project
+
+ObdNick is free — no ads, no subscriptions. If you find it useful, you can support development with a donation:
+
+<p align="center">
+  <a href="https://www.paypal.com/donate/?hosted_button_id=PYZM2HT8ZKPYN">
+    <img src="https://img.shields.io/badge/Donate-PayPal-00457C?logo=paypal&logoColor=white" alt="Donate with PayPal"/>
+  </a>
+</p>
+
+You can also tap **Donate with PayPal** in **Settings** inside the app.
 
 <br/>
 
@@ -257,7 +317,7 @@ Simulates realistic engine data without Bluetooth:
 | Async | **Kotlin Coroutines** + **StateFlow** / **SharedFlow** |
 | OBD protocol | **obd-java-api 1.0** (Mode 01 PIDs, Mode 03/04 DTCs) |
 | Drag & drop | **sh.calvin.reorderable 3.1.0** |
-| Build | **AGP 9.3.0**, **Gradle 9.5.0**, **KSP**, **compileSdk 37**, **minSdk 24**, **Java 11** |
+| Build | **AGP 9.3.0**, **Gradle 9.5.0**, **KSP**, **compileSdk 37**, **targetSdk 37**, **minSdk 24**, **Java 11** |
 
 ---
 
@@ -441,9 +501,17 @@ Keep-alive: every 1 s, if `lastReadingTimestamp` is older than 3 s → probe `01
 
 Requires **Android Studio** with JDK 11+ and an ELM327 Bluetooth adapter for live testing.
 
+Output APK: `app/build/outputs/apk/debug/app-debug.apk`
+
 </details>
 
 ---
+
+<p align="center">
+  <a href="https://www.paypal.com/donate/?hosted_button_id=PYZM2HT8ZKPYN">
+    <img src="https://img.shields.io/badge/Donate-PayPal-00457C?logo=paypal&logoColor=white" alt="Donate with PayPal"/>
+  </a>
+</p>
 
 <p align="center">
   <sub>ObdNick v 1.0 · Built with Kotlin & Jetpack Compose</sub>
