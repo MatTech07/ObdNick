@@ -54,7 +54,7 @@ ObdNick is an OBD-II diagnostic and performance app built for enthusiasts. Custo
 
 **ObdNick** connects to an ELM327 Bluetooth OBD-II adapter and turns your phone into a configurable racing dashboard. You can monitor RPM, speed, throttle, temperatures, and more through custom widgets, run 0–100 km/h acceleration tests, read trouble codes, and personalize the look with racing-themed color schemes.
 
-The app is designed for low latency, stable Bluetooth sessions, and a clean dark UI optimized for in-car use. The interface runs **edge-to-edge** — content uses the full screen below the top bar, with **ObdNick · v 1.0** shown in the top-right corner next to the current screen name.
+The app is designed for low latency, stable Bluetooth sessions, and a clean dark UI optimized for in-car use.
 
 ---
 
